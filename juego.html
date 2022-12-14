@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title> POKEMON! </title>
+        <script src='js/pokemon.js'></script>
+    </head>
+    
+    <body>
+        <h1>
+            POKEMON! 🔥💧🌱
+        </h1>
+
+        <section id="seleccionar-mascota">
+            <h2> 
+                Elige tu mascota
+            </h2>
+
+            <label for="bulbasaur">Bulbasaur</label>
+            <input type="radio" name="mascota" id="bulbasaur">
+
+            <label for="charmander">Charmander</label>
+            <input type="radio" name="mascota" id="charmander">
+
+            <label for="squirtle">Squirtle</label>
+            <input type="radio" name="mascota" id="squirtle">
+
+            <p><button id="boton-mascota">Seleccionar</button></p>
+
+        </section>
+
+        <section id="seleccionar-ataque">
+            <h2>
+                Elige tu ataque 
+            </h2>
+
+            <p>
+                Tu pokemon <span id="pokemon-jugador"></span> tiene <span id="vidas-jugador">3</span> vidas
+            </p>
+
+            <p>
+                El pokemon enemigo <span id="pokemon-enemigo"></span> tiene <span id="vidas-enemigo">3</span> vidas
+            </p>
+
+            <p>
+                <button id="boton-fuego">Fuego 🔥</button>
+                <button id="boton-agua">Agua 💧</button>
+                <button id="boton-tierra">Tierra 🌱</button>
+            </p>
+
+        </section>
+
+        <section id="mensajes">
+
+        </section>
+
+        <section id="reiniciar">
+            <button id="boton-reiniciar">Reiniciar</button>
+
+
+        </section>
+    </body>
+</html>
