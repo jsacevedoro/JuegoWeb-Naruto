@@ -2,62 +2,75 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title> POKEMON! </title>
-        <script src='js/pokemon.js'></script>
+        <title> NARUTO! </title>
+        <link rel="stylesheet" href="./styles.css">
     </head>
     
     <body>
-        <h1>
-            POKEMON! 🔥💧🌱
-        </h1>
-
-        <section id="seleccionar-mascota">
-            <h2> 
-                Elige tu mascota
+        <section id="seleccionar-animal">
+            <div class="titulo">  
+                <img src="./assets/narutotittle.png" class="imagen-titulo">
+            </div>
+            <h2 class="subtitulo">
+                <p>¡Kuchiyose no jutsu! &emsp; Invoca a tu animal ninja</p>
             </h2>
-
-            <label for="bulbasaur">Bulbasaur</label>
-            <input type="radio" name="mascota" id="bulbasaur">
-
-            <label for="charmander">Charmander</label>
-            <input type="radio" name="mascota" id="charmander">
-
-            <label for="squirtle">Squirtle</label>
-            <input type="radio" name="mascota" id="squirtle">
-
-            <p><button id="boton-mascota">Seleccionar</button></p>
-
+            <div class="contenedor-tarjetas" id="contenedor-tarjetas"></div>
+            <p><button  id="boton-animal">INVOCAR</button></p>
         </section>
 
         <section id="seleccionar-ataque">
-            <h2>
-                Elige tu ataque 
-            </h2>
+            <h2 class="subtitulo">Combate</h2>
+            <div class="animales-batalla">
+                <div class="contenedor-ataques" id="ataques-jugador"></div>
+                <div class="vidas">
+                    <p>Jugador</p>
+                    <p class="texto-vidas"><b>VIDAS</b></p>
+                    <div class="contenedor-vidas" id="vidas-jugador"></div>
+                </div>
+                <div class="contenedor-animal-batalla">
+                    <div class="animal-batalla" id="animal-jugador"></div>
+                    <div id="ataque-actual-jugador"></div>
+                </div>
+                
+                <div class="contenedor-vs">
+                    <img src="./assets/vs.png" class="imagen-vs"> 
+                </div>
+                
+                <div class="contenedor-animal-batalla">
+                    <div class="animal-batalla" id="animal-enemigo"></div>
+                    <div id="ataque-actual-enemigo"></div>
+                </div>
+                
+                <div class="vidas">
+                    <p>PC</p>
+                    <p class="texto-vidas"><b>VIDAS</b></p>
+                    <div class="contenedor-vidas" id="vidas-enemigo"></div>
+                </div>
 
-            <p>
-                Tu pokemon <span id="pokemon-jugador"></span> tiene <span id="vidas-jugador">3</span> vidas
-            </p>
-
-            <p>
-                El pokemon enemigo <span id="pokemon-enemigo"></span> tiene <span id="vidas-enemigo">3</span> vidas
-            </p>
-
-            <p>
-                <button id="boton-fuego">Fuego 🔥</button>
-                <button id="boton-agua">Agua 💧</button>
-                <button id="boton-tierra">Tierra 🌱</button>
-            </p>
-
+                <div class="contenedor-ataques" id="ataques-enemigo"></div>
+            </div>
+            <h2 class="subtitulo">Elige tu ataque </h2>
+            <div class="botones-ataque">
+                <button class="boton-ataque" id="boton-fuego">
+                    <img src="./assets/fireButton.png" class="imagen-ataque">
+                    <p><b>KATÓN</b></p>
+                </button>
+                <button class="boton-ataque" id="boton-agua">
+                    <img src="./assets/waterButton.png" class="imagen-ataque">
+                    <p><b>SUITÓN</b></p>
+                </button>
+                <button class="boton-ataque" id="boton-tierra">
+                    <img src="./assets/rockButton.png" class="imagen-ataque">
+                    <p><b>DOTÓN</b></p>
+                </button>
+            </div>
         </section>
-
-        <section id="mensajes">
-
+        <section class="fin-del-juego" id="reiniciar">
+            <div class="contenedor-fin">
+                <div id="ganador"></div>
+                <button id="boton-reiniciar">Reiniciar</button>
+            </div>
         </section>
-
-        <section id="reiniciar">
-            <button id="boton-reiniciar">Reiniciar</button>
-
-
-        </section>
+        <script src='./js/codigo.js'></script>
     </body>
 </html>

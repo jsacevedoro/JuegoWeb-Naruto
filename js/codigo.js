@@ -1,194 +1,225 @@
+// Secciones
+const sectionSeleccionarAnimal = document.getElementById('seleccionar-animal')
+const sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+const sectionReiniciar = document.getElementById('reiniciar')
+// Elementos en seleccionar animal
+const contenedorTarjetas = document.getElementById('contenedor-tarjetas')
+const botonAnimalJugador = document.getElementById('boton-animal')
+// Elementos en seleccionar ataque
+const tarjetaAnimalJugador = document.getElementById('animal-jugador')
+const tarjetaAnimalEnemigo = document.getElementById('animal-enemigo')
+const contenedorVidasJugador = document.getElementById('vidas-jugador')
+const contenedorVidasEnemigo = document.getElementById('vidas-enemigo')
+const ataqueActualJugador = document.getElementById('ataque-actual-jugador')
+const ataqueActualEnemigo = document.getElementById('ataque-actual-enemigo')
+const contenedorAtaquesJugador = document.getElementById('ataques-jugador')
+const contenedorAtaquesEnemigo = document.getElementById('ataques-enemigo')
+const botonFuego = document.getElementById('boton-fuego')
+const botonAgua = document.getElementById('boton-agua')
+const botonTierra = document.getElementById('boton-tierra')
+const sectionMensajes = document.getElementById('mensajes')
+// Elementos en reiniciar
+const contenedorGanador = document.getElementById('ganador')
+const botonRetiniciar = document.getElementById('boton-reiniciar')
+
+
+let animales = []
+
+let animalJugadorId
+let animalJugador
+let animalEnemigo 
+
 let ataqueJugador
 let ataqueEnemigo
+let opcionDeAnimales
+
+let ataques = []
+
 let vidasJugador = 3
 let vidasEnemigo = 3
 
+class animal{
+    constructor(nombre, foto) {
+        this.nombre = nombre
+        this.foto = foto
+    }
+}
 
-function iniciarJuego(){
+class ataque{
+    constructor(nombre,foto) {
+        this.nombre = nombre
+        this.foto = foto
+    }
+}
 
-    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
+let manda = new animal("Manda", "./assets/mandaborder.png")
+let gamabunta = new animal("Gamabunta", "./assets/gamabuntaborder.png")
+let katsuyu = new animal("Katsuyu", "./assets/katsuyuborder.png")
+
+let fuego = new animal("KATÓN", "./assets/fireButton.png")
+let agua = new animal("SUITÓN", "./assets/waterButton.png")
+let tierra = new animal("DOTÓN", "./assets/rockButton.png")
+
+animales.push(manda,gamabunta,katsuyu)
+ataques.push(fuego,agua,tierra)
+
+function iniciarJuego(){  
+
     sectionSeleccionarAtaque.style.display = 'none'
 
-    let sectionReiniciar = document.getElementById('reiniciar')
+    animales.forEach((animal) => {
+        opcionDeAnimales = `
+        <input type="radio" name="animal" id=${animal.nombre}>
+        <label class="tarjeta-de-animal" for=${animal.nombre}>
+            <img src=${animal.foto} alt=${animal.nombre}>
+            <p><b>${animal.nombre}</b></p>
+        </label>
+        `
+    contenedorTarjetas.innerHTML += opcionDeAnimales 
+    })
+
     sectionReiniciar.style.display = 'none'    
-
-    let botonMascotaJugador = document.getElementById('boton-mascota')
-    botonMascotaJugador.addEventListener('click', seleccionarPokemonJugador) 
-
-
-    let botonFuego = document.getElementById('boton-fuego')
+    botonAnimalJugador.addEventListener('click', seleccionarAnimalJugador) 
     botonFuego.addEventListener('click', ataqueFuego)
-    
-    let botonAgua = document.getElementById('boton-agua')
-    botonAgua.addEventListener('click', ataqueAgua)
-
-    let botonTierra = document.getElementById('boton-tierra')
+    botonAgua.addEventListener('click', ataqueAgua)   
     botonTierra.addEventListener('click', ataqueTierra)
-
-    let botonRetiniciar = document.getElementById('boton-reiniciar')
     botonRetiniciar.addEventListener('click', reiniciarJuego)
-
 }
 
 
-function seleccionarPokemonJugador(){
+function seleccionarAnimalJugador(){
+    sectionSeleccionarAnimal.style.display = 'none'
 
-    let sectionSeleccionarMascota = document.getElementById('seleccionar-mascota')
-    sectionSeleccionarMascota.style.display = 'none'
-
-    let spanPokemonJugador = document.getElementById('pokemon-jugador')
-
-    if (document.getElementById('bulbasaur').checked){
-        spanPokemonJugador.innerHTML = 'bulbasaur'
-        seleccionarPokemonEnemigo()
-    } else if(document.getElementById('charmander').checked){
-        spanPokemonJugador.innerHTML = 'charmander'
-        seleccionarPokemonEnemigo()
-    } else if(document.getElementById('squirtle').checked){
-        spanPokemonJugador.innerHTML = 'squirtle'
-        seleccionarPokemonEnemigo()
-    } else {
-        alert('Elige un Pokemón!')
+    // Verificar si ningún input está checkeado
+    let checked = document.querySelectorAll('input[name="animal"]:checked')
+    if(checked.length==0){
+        alert("Elige un animal ninja")
         location.reload()
-    }    
-
-    let sectionSeleccionarAtaque = document.getElementById('seleccionar-ataque')
-    sectionSeleccionarAtaque.style.display = 'block'
-    
-
-
+    } else{
+        animalJugadorId = eval(document.querySelector('input[name="animal"]:checked')).id
+        seleccionarAnimalEnemigo()
+        sectionSeleccionarAtaque.style.display = 'flex'
+        mostrarAnimalesBatalla()
+    }   
 }
 
-
-function nombrePokemonElegido(){
-
+function seleccionarAnimalEnemigo(){
+    animalEnemigo = animales[aleatorio(0, animales.length-1)]
 }
 
-
-function seleccionarPokemonEnemigo(){
-    let pokemonAleatorio = aleatorio(1,3)
-    let spanPokemonEnemigo = document.getElementById('pokemon-enemigo')
-
-    if(pokemonAleatorio == 1){
-        spanPokemonEnemigo.innerHTML = 'bulbasaur'
-    } else if(pokemonAleatorio==2){
-        spanPokemonEnemigo.innerHTML = 'charmander'
-    } else {spanPokemonEnemigo.innerHTML='squirtle'}
-
+function mostrarAnimalesBatalla(){
+    animales.forEach((animal) => {
+        if(animalJugadorId==animal.nombre){
+            animalJugador = animal
+        }
+    })   
+    tarjetaAnimalJugador.innerHTML = `
+    <p><b>${animalJugador.nombre}</b></p>
+    <img src=${animalJugador.foto}>
+    ` 
+    tarjetaAnimalEnemigo.innerHTML = `
+    <p><b>${animalEnemigo.nombre}</b></p>
+    <img src=${animalEnemigo.foto}>
+    `
+    actualizarVidas()
 }
-
 
 function ataqueFuego(){
-    ataqueJugador = 'FUEGO'
+    ataqueJugador = fuego
     ataqueAleatorioEnemigo()
 }
 
 function ataqueAgua(){
-    ataqueJugador = 'AGUA'
+    ataqueJugador = agua
     ataqueAleatorioEnemigo()
 }
 
 function ataqueTierra(){
-    ataqueJugador = 'TIERRA'
+    ataqueJugador = tierra
     ataqueAleatorioEnemigo()
 }
 
-function ataqueAleatorioEnemigo(){
-    let ataqueAleatorio = aleatorio(1,3)
-    if (ataqueAleatorio==1){ ataqueEnemigo='FUEGO'}
-    else if (ataqueAleatorio==2){ ataqueEnemigo='AGUA'}
-    else { ataqueEnemigo='TIERRA'}
 
+function ataqueAleatorioEnemigo(){
+    ataqueEnemigo = ataques[aleatorio(0,ataques.length-1)]
+    mostrarAtaques()
+    guardarAtaques()
     combate()
+}
+
+function mostrarAtaques(){
+    ataqueActualJugador.innerHTML = "¡" + ataqueJugador.nombre + "!"
+    ataqueActualEnemigo.innerHTML = "¡" + ataqueEnemigo.nombre + "!"
+}
+
+function guardarAtaques(){
+    contenedorAtaquesJugador.innerHTML += `
+    <img src="${ataqueJugador.foto}">
+    `
+    contenedorAtaquesEnemigo.innerHTML += `
+    <img src="${ataqueEnemigo.foto}">
+    `
 }
 
 
 function combate(){
-    let spanVidasJugador = document.getElementById('vidas-jugador')
-    let spanVidasEnemigo = document.getElementById('vidas-enemigo')
-
     let resultado = 'PERDISTE'
     if(ataqueJugador==ataqueEnemigo){
         resultado = 'EMPATE'
-    } else if(ataqueJugador=='FUEGO' && ataqueEnemigo=='TIERRA'){
+    } else if(ataqueJugador==fuego && ataqueEnemigo==tierra){
         resultado = 'GANASTE'
         vidasEnemigo --
-        spanVidasEnemigo.innerHTML = vidasEnemigo
-    } else if(ataqueJugador=='AGUA' && ataqueEnemigo=='FUEGO'){
+    } else if(ataqueJugador==agua && ataqueEnemigo==fuego){
         resultado = 'GANASTE'
         vidasEnemigo --
-        spanVidasEnemigo.innerHTML = vidasEnemigo
-    } else if(ataqueJugador=='TIERRA' && ataqueEnemigo=='AGUA'){
+    } else if(ataqueJugador==tierra && ataqueEnemigo==agua){
         resultado = 'GANASTE'
         vidasEnemigo --
-        spanVidasEnemigo.innerHTML = vidasEnemigo
     } else {
         vidasJugador --
-        spanVidasJugador.innerHTML = vidasJugador
     }
-
-
-
-    crearMensaje(resultado)
-
+    actualizarVidas()
     revisarVidas()
+}
+
+function actualizarVidas(){
+    contenedorVidasJugador.innerHTML = " "
+    contenedorVidasEnemigo.innerHTML = " "
+    for (let i = 0; i<vidasJugador; i++ ){
+        contenedorVidasJugador.innerHTML += `
+        <div class="vida">
+        `
+    }
+    for (let i = 0; i<vidasEnemigo; i++ ){
+        contenedorVidasEnemigo.innerHTML += `
+        <div class="vida">
+        `
+    }
 }
 
 function revisarVidas(){
     if (vidasEnemigo==0){
-        crearMensajeFinal('FELICITACIONES, GANASTE!')
+        finDelJuego("Ganaste")
     } else if (vidasJugador==0){
-        crearMensajeFinal('LO SIENTO, PERDISTE')
+        finDelJuego("Perdiste")
     }
 }
 
-function crearMensajeFinal(resultadoFinal){
-
-    let sectionMensajes = document.getElementById('mensajes')
-
-    let parrafo = document.createElement('p')
-
-    parrafo.innerHTML = resultadoFinal
-    sectionMensajes.appendChild(parrafo)
-
-    let botonFuego = document.getElementById('boton-fuego')
+function finDelJuego(mensaje){
+    sectionSeleccionarAtaque.style.opacity = "0.3";
     botonFuego.disabled = true
-    
-    let botonAgua = document.getElementById('boton-agua')
     botonAgua.disabled = true
-
-    let botonTierra = document.getElementById('boton-tierra')
     botonTierra.disabled = true
-
-    let sectionReiniciar = document.getElementById('reiniciar')
-    sectionReiniciar.style.display = 'block'    
-
+    sectionReiniciar.style.display = 'block'
+    contenedorGanador.innerHTML = mensaje
 }
-
-function crearMensaje(resultado){
-
-    let sectionMensajes = document.getElementById('mensajes')
-
-    let parrafo = document.createElement('p')
-
-    parrafo.innerHTML = 'Tu pokemon atacó con '+ ataqueJugador + ' \nEl pokemon enemigo atacó con ' + ataqueEnemigo + ' ' + resultado
-    
-    sectionMensajes.appendChild(parrafo)
-
-}
-
 
 function reiniciarJuego(){
-
     location.reload()
 }
 
 function aleatorio(min,max){
     return Math.floor(Math.random()*(max-min+1)+min)
 }
-
-
-
-   
 
 window.addEventListener('load', iniciarJuego)
