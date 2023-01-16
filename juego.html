@@ -7,6 +7,7 @@
     </head>
     
     <body>
+
         <section id="seleccionar-animal">
             <div class="titulo">  
                 <img src="./assets/narutotittle.png" class="imagen-titulo">
@@ -16,6 +17,12 @@
             </h2>
             <div class="contenedor-tarjetas" id="contenedor-tarjetas"></div>
             <p><button  id="boton-animal">INVOCAR</button></p>
+        </section>
+
+        <section id="ver-mapa">
+            <h2 class="subtitulo">Explora el mundo shinobi para encontrar enemigos</h1>
+            <div><img class="flechas" src="./assets/arrows.png"></div>
+            <canvas id="mapa"></canvas>     
         </section>
 
         <section id="seleccionar-ataque">
@@ -30,26 +37,22 @@
                 <div class="contenedor-animal-batalla">
                     <div class="animal-batalla" id="animal-jugador"></div>
                     <div id="ataque-actual-jugador"></div>
-                </div>
-                
+                </div>    
                 <div class="contenedor-vs">
                     <img src="./assets/vs.png" class="imagen-vs"> 
                 </div>
-                
                 <div class="contenedor-animal-batalla">
                     <div class="animal-batalla" id="animal-enemigo"></div>
                     <div id="ataque-actual-enemigo"></div>
                 </div>
-                
                 <div class="vidas">
                     <p>PC</p>
                     <p class="texto-vidas"><b>VIDAS</b></p>
                     <div class="contenedor-vidas" id="vidas-enemigo"></div>
                 </div>
-
                 <div class="contenedor-ataques" id="ataques-enemigo"></div>
             </div>
-            <h2 class="subtitulo">Elige tu ataque </h2>
+            <h2 class="subtitulo" id="elegir-ataque-texto">Elige tu ataque </h2>
             <div class="botones-ataque">
                 <button class="boton-ataque" id="boton-fuego">
                     <img src="./assets/fireButton.png" class="imagen-ataque">
@@ -65,12 +68,17 @@
                 </button>
             </div>
         </section>
+        
         <section class="fin-del-juego" id="reiniciar">
             <div class="contenedor-fin">
                 <div id="ganador"></div>
                 <button id="boton-reiniciar">Reiniciar</button>
             </div>
         </section>
-        <script src='./js/codigo.js'></script>
+        <script src="./js/globales.js"></script>
+        <script src='./js/elegirPersonaje.js'></script>
+        <script src='./js/explorarMapa.js'></script>
+        <script src='./js/combatir.js'></script>
+
     </body>
 </html>
